@@ -1,7 +1,9 @@
 # needed packages
 install.packages("BiocManager")#one time
+install.packages("matrixTests")
 BiocManager::install("genefilter")#one time
 library(BiocManager)#one time
+library(matrixTests)#each time you open your R
 library(genefilter)#each time you open your R
 
 #loading the gene expression data for both normal and tumer data
@@ -34,8 +36,8 @@ data=data[rowMeans(data) > 1,]
 ####calculating the fold change####
 
 #caculate the logged mean for each group
-norm.mean = apply((log2(data+1))[,1:50], 1, mean)
-tum.mean = apply((log2(data+1))[,51:dim(data)[2]], 1, mean)
+tum.mean = apply((log2(data+1))[,1:50], 1, mean)
+norm.mean = apply((log2(data+1))[,51:dim(data)[2]], 1, mean)
 
 #calculate the fold change by taking the difference between the two means
 #the difference between logged means equl to the fold change insted of using
@@ -50,7 +52,7 @@ hist(fold)
 #creat a phenotype table as its rows contain a phenotype ethier tumor or
 #normal corrseponding to the columns in the expression data; so as we know 
 #that the first 50 column in the expression data are tumor so the first 50
-#row in the phenotype will be labeld tum nd the other 50 norm
+#row in the phenotype will be labeld tum and the other 50 norm
 phenotype = as.data.frame(factor(rep(c("tum","norm"), c(50, 50))))
 colnames(phenotype)= "grouping"
 
@@ -71,3 +73,5 @@ res.deg=result[result$p.adj < 0.05 & abs(result$fold)>2,]
 #export the Degs into your current folder for further analysthis
 write.csv(as.matrix(res.deg),file="res.degs.csv", quote=F,row.names=T)
 
+#using nonprametric test as wilcoxon test if the data isn't normally distributed
+w=row_wilcoxon_twosample(data[,1:50],data[,51:dim(data)[2]])
