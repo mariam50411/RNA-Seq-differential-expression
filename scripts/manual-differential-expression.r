@@ -1,6 +1,6 @@
 # needed packages
 install.packages("BiocManager")#one time
-install.packages("matrixTests")
+install.packages("matrixTests")#one time
 BiocManager::install("genefilter")#one time
 library(BiocManager)#one time
 library(matrixTests)#each time you open your R
