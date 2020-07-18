@@ -59,4 +59,4 @@ res=as.data.frame(res[complete.cases(res), ])
 deseq.deg=res[res$padj < 0.05 & abs(res$log2FoldChange)>2,]
 
 #export the Degs into your current folder for further analysthis
-write.csv(as.matrix(deseq.deg),file="deseq.deg", quote=F,row.names=T)
+write.csv(as.matrix(deseq.deg),file="deseq.deg.csv", quote=F,row.names=T)
