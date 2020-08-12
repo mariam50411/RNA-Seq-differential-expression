@@ -30,7 +30,7 @@ hist(data, col = "orange", main="Histogram")
 # we use (+1) to avoid the infinity character when we log zero valus 
 hist(log2(data+1), col = "orange", main="Histogram")
 
-#filter low count genes which have row mean lower than 10 reads
+#filter low count genes which have row mean lower than 1
 data=data[rowMeans(data) > 1,]
 
 ####calculating the fold change####
